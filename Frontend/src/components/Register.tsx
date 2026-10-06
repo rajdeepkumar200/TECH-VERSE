@@ -191,7 +191,7 @@ const Register = () => {
             type="submit"
             className="w-full py-4 text-lg font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
           >
-            Submit Registration
+            🚀 Submit Registration
           </button>
         </form>
       </div>

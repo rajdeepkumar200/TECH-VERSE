@@ -465,6 +465,10 @@ const CodeCrafter = () => {
             <div className="flex-1 min-w-0">
               <HexBadge title="Base Terminal" value="CT University" icon={<MapPin size={24} />} delay={0.3} />
             </div>
+            <MechanicalConnector flip={true} />
+            <div className="flex-1 min-w-0">
+              <HexBadge title="Status" value="Ended on 22 apr 26" icon={<MapPin size={24} />} delay={0.3} />
+            </div>
           </div>
 
           {/* Timer Hub */}

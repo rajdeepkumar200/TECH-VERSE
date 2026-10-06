@@ -46,7 +46,7 @@ export default function ImageCarousel({
     url: string,
     width = 800
   ) => {
-    if (!url || !url.includes("/upload/")) return url || "";
+    if (!url.includes("/upload/")) return url;
   
     return url.replace(
       "/upload/",

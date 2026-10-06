@@ -1,14 +1,5 @@
 {
-  "functions": {
-    "api/send-email.js": {
-      "includeFiles": "api/fonts/**"
-    }
-  },
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
     {
       "source": "/(.*)",
       "destination": "/"

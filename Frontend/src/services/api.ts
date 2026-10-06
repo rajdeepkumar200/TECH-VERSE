@@ -346,7 +346,7 @@ export const getClubMembers = async () => {
   }
 };
 
-export const sendEmailDirect = async (payload: { type: 'screening' | 'card' | 'promotion' | 'test'; member?: any; recipient?: string }) => {
+export const sendEmailDirect = async (payload: { type: 'screening' | 'card' | 'promotion' | 'resignation' | 'termination' | 'test'; member?: any; recipient?: string }) => {
   // Try local/same-origin serverless endpoint first, or production Vercel relay
   const relayUrls = [
     '/api/send-email',

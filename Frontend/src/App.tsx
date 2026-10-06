@@ -6,9 +6,11 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 import Navbar from "./components/Navbar";
+import EngineersDay from "./pages/Events";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Events from "./pages/Events";
+import EventPage from "./pages/EventPage";
 import Gallery from "./pages/Gallery";
 import AboutUs from "./pages/AboutUs";
 import Sponsors from "./pages/Sponsors";
@@ -19,6 +21,7 @@ import Loading from "./components/Loading";
 import Register from "./components/Register"
 import CodeCrafter from "./pages/CodeCrafter";
 import AdminPortal from "./pages/AdminPortal";
+
 
 const queryClient = new QueryClient();
 
@@ -57,16 +60,18 @@ const AppContent: React.FC = () => {
       <Loading show={loading} />
       <Routes location={location}>
         <Route path="/" element={<Home />} />
-        <Route path="/events" element={<Events />} />
+        <Route path="/events" element={<EventPage />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<AboutUs onLoadComplete={() => setLoading(false)} />} />
         <Route path="/sponsors" element={<Sponsors />} />
         <Route path="/winners" element={<Winners />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/codecrafter" element={<CodeCrafter />} />
-        <Route path="/admin" element={<AdminPortal />} />
+        <Route path="/events/codecrafter" element={<CodeCrafter />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/events/engineersday" element={<EngineersDay/>} />
+        <Route path="/admin" element={<AdminPortal />} />
+
       </Routes>
       {location.pathname !== '/codecrafter' && <Footer />}
     </>

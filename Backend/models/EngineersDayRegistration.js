@@ -1,20 +1,5 @@
 const mongoose = require("mongoose");
 
-const TeamMemberSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-  },
-  course: {
-    type: String,
-    trim: true,
-  },
-  regNo: {
-    type: String,
-    trim: true,
-  },
-}, { _id: false });
-
 const RegistrationSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -48,114 +33,21 @@ const RegistrationSchema = new mongoose.Schema({
     trim: true,
     index: true,
   },
-  teamSize: {
-    type: Number,
-    default: 1,
-  },
-  leaderName: {
-    type: String,
-    trim: true,
-  },
-  // Participant 2 (if teamSize >= 2)
-  member2_name: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member2_course: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member2_regNo: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  // Participant 3 (if teamSize >= 3)
-  member3_name: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member3_course: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member3_regNo: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  // Participant 4 (if teamSize >= 4)
-  member4_name: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member4_course: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member4_regNo: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  // Participant 5 (if teamSize >= 5)
-  member5_name: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member5_course: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  member5_regNo: {
-    type: String,
-    trim: true,
-    default: "",
-  },
-  // Structured Array for all participants
-  participants: [
-    {
-      name: { type: String, trim: true },
-      course: { type: String, trim: true },
-      regNo: { type: String, trim: true },
-      role: { type: String, default: "Member" },
-    }
-  ],
-  teamMembers: {
-    type: [TeamMemberSchema],
-    default: [],
-  },
-  allParticipants: {
-    type: [TeamMemberSchema],
-    default: [],
-  },
   createdAt: {
     type: Date,
     default: Date.now,
     index: true,
   },
-}, { strict: false });
+});
 
 // Clean short collection names without "engineersday_" prefix
 const EVENT_COLLECTION_MAP = {
   "quiz": "quiz",
   "3-wheel": "3wheel",
-  "3wheel": "3wheel",
   "meme-making": "mememaking",
-  "minecraft": "minecraft",
-  "codm": "codm",
   "minecraft-codm": "minecraft_codm",
   "bgmi": "bgmi",
-  "ai-imposter": "tech_imposter",
-  "tech-imposter": "tech_imposter",
+  "ai-imposter": "ai_imposter",
   "prompt-engineering": "prompt_engineering",
   "poster-making": "poster_making",
   "autocad-civil": "autocad_civil",

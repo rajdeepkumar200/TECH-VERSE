@@ -13,10 +13,8 @@ const Gallery = () => {
 
   useEffect(() => {
     galleryItems.slice(0, 4).forEach(item => {
-      if (item?.img_url) {
-        const img = new Image();
-        img.src = item.img_url;
-      }
+      const img = new Image();
+      img.src = item.img_url;
     });
   }, [galleryItems]);
   

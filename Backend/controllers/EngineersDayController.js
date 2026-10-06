@@ -41,8 +41,6 @@ const registerParticipant = async (req, res) => {
       contactNo,
       competition,
       eventSlug,
-      teamMembers,
-      teamSize,
     } = req.body;
 
     if (!name || !course || !regNo || !contactNo || !competition) {
@@ -65,72 +63,13 @@ const registerParticipant = async (req, res) => {
       .trim()
       .replace(/[^a-z0-9_]/g, "_");
 
-    const cleanedMembers = Array.isArray(teamMembers)
-      ? teamMembers.map((m) => ({
-          name: m.name ? String(m.name).trim() : "",
-          course: m.course ? String(m.course).trim() : "",
-          regNo: m.regNo ? String(m.regNo).trim() : "",
-        }))
-      : [];
-
-    const computedTeamSize = Number(teamSize) || (cleanedMembers.length + 1);
-
-    const leaderNameClean = (req.body.leaderName || name).trim().replace(/\(Leader\)/g, "").trim();
-    const leaderCourseClean = (req.body.leaderCourse || course).trim().replace(/\(Leader\)/g, "").trim();
-    const leaderRegNoClean = (req.body.leaderRegNo || regNo).trim().replace(/\(Leader\)/g, "").trim();
-
-    const m2 = cleanedMembers[0] || {};
-    const m3 = cleanedMembers[1] || {};
-    const m4 = cleanedMembers[2] || {};
-    const m5 = cleanedMembers[3] || {};
-
     const regData = {
-      // Participant 1 (Team Leader)
-      name: leaderNameClean,
-      course: leaderCourseClean,
-      regNo: leaderRegNoClean,
+      name: name.trim(),
+      course: course.trim(),
+      regNo: regNo.trim(),
       contactNo: cleanContact,
       competition: competition.trim(),
       eventSlug: eventSlug ? eventSlug.toLowerCase().trim() : cleanSlug,
-      teamSize: computedTeamSize,
-      leaderName: leaderNameClean,
-
-      // Dedicated Participant 2 fields
-      member2_name: req.body.member2_name ? String(req.body.member2_name).trim() : (m2.name || ""),
-      member2_course: req.body.member2_course ? String(req.body.member2_course).trim() : (m2.course || ""),
-      member2_regNo: req.body.member2_regNo ? String(req.body.member2_regNo).trim() : (m2.regNo || ""),
-
-      // Dedicated Participant 3 fields
-      member3_name: req.body.member3_name ? String(req.body.member3_name).trim() : (m3.name || ""),
-      member3_course: req.body.member3_course ? String(req.body.member3_course).trim() : (m3.course || ""),
-      member3_regNo: req.body.member3_regNo ? String(req.body.member3_regNo).trim() : (m3.regNo || ""),
-
-      // Dedicated Participant 4 fields
-      member4_name: req.body.member4_name ? String(req.body.member4_name).trim() : (m4.name || ""),
-      member4_course: req.body.member4_course ? String(req.body.member4_course).trim() : (m4.course || ""),
-      member4_regNo: req.body.member4_regNo ? String(req.body.member4_regNo).trim() : (m4.regNo || ""),
-
-      // Dedicated Participant 5 fields
-      member5_name: req.body.member5_name ? String(req.body.member5_name).trim() : (m5.name || ""),
-      member5_course: req.body.member5_course ? String(req.body.member5_course).trim() : (m5.course || ""),
-      member5_regNo: req.body.member5_regNo ? String(req.body.member5_regNo).trim() : (m5.regNo || ""),
-
-      // Complete Structured array for all participants
-      participants: [
-        {
-          name: leaderNameClean,
-          course: leaderCourseClean,
-          regNo: leaderRegNoClean,
-          role: computedTeamSize > 1 ? "Team Leader" : "Participant",
-        },
-        ...cleanedMembers.map((m, idx) => ({
-          name: m.name,
-          course: m.course,
-          regNo: m.regNo,
-          role: `Teammate ${idx + 2}`,
-        })),
-      ],
-      teamMembers: cleanedMembers,
     };
 
     // Save directly to the event's dedicated collection
@@ -189,17 +128,13 @@ const getRegistrations = async (req, res) => {
   }
 };
 
-// Get stats for all events
+// Get stats for all 12 events
 const getEventStats = async (req, res) => {
   try {
     const breakdown = [];
     let total = 0;
-    const seenCollections = new Set();
 
     for (const [slug, collectionName] of Object.entries(EVENT_COLLECTION_MAP)) {
-      if (seenCollections.has(collectionName)) continue;
-      seenCollections.add(collectionName);
-
       const DedicatedModel = getEventModel(slug);
       const count = await DedicatedModel.countDocuments();
       total += count;
@@ -241,24 +176,11 @@ const exportRegistrationsCSV = async (req, res) => {
 
     const fields = [
       "_id",
-      "competition",
-      "teamSize",
       "name",
       "course",
       "regNo",
       "contactNo",
-      "member2_name",
-      "member2_course",
-      "member2_regNo",
-      "member3_name",
-      "member3_course",
-      "member3_regNo",
-      "member4_name",
-      "member4_course",
-      "member4_regNo",
-      "member5_name",
-      "member5_course",
-      "member5_regNo",
+      "competition",
       "createdAt",
     ];
 

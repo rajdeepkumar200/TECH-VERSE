@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import { Code, Trophy, Users, Sparkles } from "lucide-react";
 import TechverseLogo from "@/assets/techverse-logo.jpg";
+import EventCard from "@/components/ui/EventCard";
 import UniversityLogo from "@/assets/univeee-logo.png";
 import SoetLogo from "@/assets/soet-logo.png";
 import { EnquiryDialog } from "@/components/EnquiryDialog";
@@ -14,7 +15,7 @@ import { FloatingSocials } from "@/components/FloatingSocials";
 import { FeatureCard } from "@/components/FeatureCard";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const EventPage = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
     const navigate = useNavigate();
@@ -26,32 +27,29 @@ const Home = () => {
     { label: "Mentors", value: "20+", icon: Zap },
   ];
 
-  const features = [
-    {
-      icon: Code,
-      title: "Workshops & Training",
-      description:
-        "Regular hands-on workshops on latest technologies, programming languages, and development tools.",
-    },
-    {
-      icon: Trophy,
-      title: "Hackathons & Competitions",
-      description:
-        "Participate in exciting hackathons and coding competitions to showcase your skills.",
-    },
-    {
-      icon: Users,
-      title: "Networking Events",
-      description:
-        "Connect with industry professionals, alumni, and fellow tech enthusiasts.",
-    },
-    {
-      icon: Sparkles,
-      title: "Mentorship",
-      description:
-        "Gain hands-on guidance from industry experts and transform your ideas into impactful projects.",
-    },
-  ];
+ const events = [
+  {
+    title: "CODE CRAFTER VERSION 3.0",
+    description: "A competitive coding challenge for developers.",
+    date: "21 April 2025",
+    location: "CT University, Punjab",
+    status: "ended" as const,
+    icon: Code,
+    registrationPath: "/events/codecrafter",
+
+  },
+  {
+    title: "Engineers Day",
+    description: "Participate in 12 exciting competitions across tech, gaming, design, and core engineering. Free entry for all students!",
+    date: "Sept 15, 2026",
+    location: "CT University, Punjab",
+    status: "ended" as const,
+    icon: Trophy,
+    registrationPath: "/events/EngineersDay",
+  },
+//   ended/ongoing/upcoming
+  
+];
   return (
     <div className="min-h-screen relative">
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
@@ -73,7 +71,7 @@ const Home = () => {
       <div className="absolute top-0 left-1/2 w-0.5 h-full bg-gradient-to-b from-transparent via-purple-400 to-transparent"></div>
     </div>
 
-    {/* Floating Tech Icons with Glow */}
+    
     <div className="absolute top-32 right-10 md:right-1/4 animate-[bounce_3s_ease-in-out_infinite]">
       <div className="p-4 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl border border-cyan-400/30 shadow-[0_0_30px_rgba(34,211,238,0.4)]">
         <Code2 className="w-8 h-8 text-cyan-400" />
@@ -131,39 +129,15 @@ const Home = () => {
 {/* ✅ CENTERED CONTENT */}
 <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 space-y-10 pt-32 pb-20">
   {/* Edition Badge */}
-  <div className="inline-block px-6 py-2 bg-secondary/20 backdrop-blur-sm rounded-full border border-secondary/30 shadow-md">
-    <span className="text-secondary font-semibold tracking-wide">Since 2025</span>
-  </div>
+  
 
   {/* Title */}
   <h1 className="text-6xl md:text-8xl font-bold font-space bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(147,51,234,0.6)] leading-[1.15] mt-8">
-    TechVerse
+    New event in process stay tuned
   </h1>
 
-  {/* Description */}
-  <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed tracking-wide bg-gradient-to-r from-[#93C5FD] via-[#E0F2FE] to-[#C7D2FE] bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(59,130,246,0.4)]">
-    The ultimate tech club
-    <Typewriter
-      words={[
-        " that transforms Ideas into Reality.",
-        " where Innovation meets Community.",
-      ]}
-      loop={true}
-      cursor
-      cursorStyle="|"
-      typeSpeed={90}
-      deleteSpeed={60}
-      delaySpeed={1500}
-    />
-  </p>
-
-  {/* Location */}
-  <div className="flex flex-wrap items-center justify-center gap-4 text-white/90 mt-12">
-    <div className="flex items-center gap-2">
-      <MapPin size={22} />
-      <span className="font-medium tracking-wide">CT University, Punjab</span>
-    </div>
-  </div>
+  
+ 
 
   {/* Buttons */}
   <div className="flex flex-wrap gap-6 justify-center mt-19">
@@ -181,18 +155,8 @@ const Home = () => {
     >
       <Link to="/about">About us</Link>
     </Button>
-    <Button
-      size="lg"
-      variant="outline"
-      className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500
-      text-white
-      shadow-lg shadow-cyan-500/20
-      hover:shadow-purple-500/30
-      transition-all duration-300
-      hover:scale-105 px-10 py-6 text-lg backdrop-blur-sm hover:shadow-[0_0_25px_rgba(255,255,255,0.6)] transition-all duration-300 rounded-xl"
-    >
-      <Link to="/codecrafter">CodeCrafter</Link>
-    </Button>
+    
+    
     
   </div>
 
@@ -244,99 +208,19 @@ const Home = () => {
 
 
       {/* { MY TECHVERSE } */}
-      <section className="relative py-10 bg-gradient-to-b from-blue-50 via-blue-100 to-gray-100 overflow-hidden">
-        {/* Heading */}
-        <h2 className="text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-12 mt-6 tracking-tight leading-tight drop-shadow-lg bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
-          Welcome to TechVerse
-        </h2>
-
-        <div className="relative flex flex-col items-center w-full mt-12">
-  {/* Center guiding line */}
-  <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-400 to-transparent z-0" />
-
-  {/* Flex row for branches and logos */}
-  <div className="flex flex-col sm:flex-row items-center justify-center w-full relative z-10 flex-wrap">
-    {/* Left Olive Branch */}
-    <div className="flex justify-end items-center gap-1">
-      {[...Array(11)].map((_, i) => (
-        <svg
-          key={i}
-          className="w-4 h-4  xl:w-6 xl:h-6 text-green-500 animate-sway"
-          style={{ transform: `rotate(${15 + i * 2}deg)` }}
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 2C8 8 2 12 2 12s6 4 10 10c4-6 10-10 10-10S16 8 12 2z" />
-        </svg>
-      ))}
-    </div>
-
-    {/* Left Logo */}
-    <div className="w-20 h-20 sm:w-32 sm:h-32 xl:w-40 xl:h-40 rounded-full overflow-hidden flex justify-center items-center bg-transparent drop-shadow-md mx-2 sm:mx-4">
-      <img
-        src={UniversityLogo}
-        alt="Left Logo"
-        className="w-full h-full object-contain"
-      />
-    </div>
-
-    {/* Center Techverse logo */}
-    <div className="w-28 h-28 sm:w-48 sm:h-48 xl:w-64 xl:h-64 rounded-full overflow-hidden flex justify-center items-center bg-transparent drop-shadow-xl mx-2 sm:mx-4">
-      <img
-        src={TechverseLogo}
-        alt="Techverse Logo"
-        className="w-full h-full object-contain"
-      />
-    </div>
-
-    {/* Right Logo */}
-    <div className="w-20 h-20 sm:w-40 sm:h-40 xl:w-48 xl:h-48 rounded-full overflow-hidden flex justify-center items-center bg-transparent drop-shadow-md mx-2 sm:mx-1">
-      <img
-        src={SoetLogo}
-        alt="Right Logo"
-        className="w-full h-full object-contain p-1"
-      />
-    </div>
-
-    {/* Right Olive Branch */}
-    <div className="flex justify-start items-center gap-1">
-      {[...Array(11)].map((_, i) => (
-        <svg
-          key={i}
-          className="w-4 h-4 xl:w-6 xl:h-6 text-green-500 animate-sway"
-          style={{ transform: `rotate(${-15 - i * 2}deg)` }}
-          fill="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 2C8 8 2 12 2 12s6 4 10 10c4-6 10-10 10-10S16 8 12 2z" />
-        </svg>
-      ))}
-    </div>
-  </div>
-</div>
-
-        {/* Description */}
-       <p className="text-justify w-4/5 max-w-3xl mx-auto text-base sm:text-lg md:text-xl lg:text-2xl text-blue-900 font-medium tracking-wide leading-relaxed md:leading-loose mt-12">
-  At <span className="font-extrabold text-blue-700">Tech Verse</span>, we believe in empowering men collaboration. 
-  Our platform brings together bright minds from around the world to share ideas, explore emerging technologies, 
-  and transform creative visions into impactful realities. Join us as we build a vibrant community where{" "}
-  <span className="font-semibold text-blue-600">technology meets imagination</span>.
-</p>
-
-      </section>
+      
 
       {/* ✅ FEATURES SECTION */}
       <section className="container mx-auto px-4 py-20 ">
         <h2 className="text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-12 mt-6 tracking-tight leading-tight drop-shadow-lg bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
-          What We Offer
+          Events
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-8 mt-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return <FeatureCard key={index} feature={feature} />;
-          })}
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+  {events.map((event, index) => (
+    <EventCard key={index} event={event} />
+  ))}
+</div>
       </section>
 
       {/* ✅ CTA SECTION */}
@@ -381,5 +265,5 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default EventPage;
 

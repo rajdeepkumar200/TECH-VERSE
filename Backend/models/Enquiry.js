@@ -9,7 +9,12 @@ const EnquirySchema = new mongoose.Schema({
   batch: { type: String, required: true },
   interests: { type: [String], required: true },
   otherInterest: { type: String },
+  memberId: { type: String, default: "" },
+  residenceType: { type: String, enum: ["Hosteller", "Day Scholar"], default: "Day Scholar" },
+  photo: { type: String, default: "" },
+  designation: { type: String, default: "" },
+  roleAssignee: { type: String, default: "" },
   createdAt: { type: Date, default: Date.now },
-});
+}, { strict: false });
 
 module.exports = mongoose.model('Enquiry', EnquirySchema);

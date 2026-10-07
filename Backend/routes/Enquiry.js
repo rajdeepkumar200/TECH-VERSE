@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get('/', enquiryController.getEnquiries);
 router.post('/', validate(EnquiryValidationSchema), enquiryController.submitEnquiry);
+router.delete('/:id', enquiryController.deleteEnquiry);
 
 module.exports = router;

@@ -1,10 +1,22 @@
+const dns = require('dns');
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
-require('@dotenvx/dotenvx').config({ silent: true });
+const path = require('path');
+const fs = require('fs');
+
+const envPath = fs.existsSync(path.join(__dirname, '.env')) 
+  ? path.join(__dirname, '.env') 
+  : (fs.existsSync(path.join(process.cwd(), '.env')) ? path.join(process.cwd(), '.env') : undefined);
+
+require('@dotenvx/dotenvx').config({ path: envPath, silent: true });
 
 const app = express();
 
@@ -56,15 +68,19 @@ app.use(rateLimit({
 
 // ==========================
 // ✅ Middleware
-// ==========================
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 // ==========================
 // ✅ MongoDB Connection
 // ==========================
-mongoose.connect(process.env.MongoDB_url)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.error('❌ MongoDB Error:', err));
+if (process.env.MongoDB_url) {
+  mongoose.connect(process.env.MongoDB_url)
+    .then(() => console.log('✅ MongoDB Connected'))
+    .catch(err => console.error('❌ MongoDB Error:', err));
+} else {
+  console.warn('⚠️ MongoDB_url not set in local environment. Set MongoDB_url in .env to connect to MongoDB Atlas.');
+}
 
 // ==========================
 // ✅ Routes
@@ -74,6 +90,9 @@ app.use('/api/gallery', require('./routes/GalleryServer'));
 app.use('/api/contact', require('./routes/ContactServer'));
 app.use('/api/aboutus', require('./routes/AboutServer'));
 app.use('/api/enquiry', require('./routes/Enquiry'));
+app.use('/api/club-members', require('./routes/ClubMemberRoute'));
+app.use('/api/screening-members', require('./routes/ScreeningMemberRoute'));
+app.use('/api/admin', require('./routes/AdminRoute'));
 app.use('/api/mentors', require('./routes/Mentor'));
 app.use('/api/register', require('./routes/RegistrationServer'));
 app.use('/api/codecrafter-register', require('./routes/CodeCrafterRegistrationServer'));
